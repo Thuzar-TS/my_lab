@@ -1,0 +1,69 @@
+// Here you can add other styles
+.btn{
+    cursor: pointer!important;
+}
+.del-btn{
+    color:red;
+}
+.edit-btn{
+    color:green;
+}
+.del-btn:hover,.edit-btn:hover{
+    color:#999;
+}
+.badge-edit-btn,.badge-del-btn{
+    cursor:pointer;
+    letter-spacing: 1px;
+    font-weight:normal;
+}
+.badge-del-btn:hover,.badge-edit-btn:hover{
+    background:#999!important;
+}
+#whiteoverlay{
+	//display: none;
+	background: white;
+	position:fixed;
+	z-index: 1021;
+	top:70px;
+	//left: 20%;	
+	border-radius: 5px 5px 3px 3px;
+	box-shadow: 3px 3px 3px #333;
+	padding-left: 0px;
+	padding-right: 0px;
+	overflow-y:auto;
+    //height:580px; 
+    //width:200px;
+    .card{
+        margin-bottom:0px;
+    }
+    .card-footer{
+        padding-bottom:5px;
+    }
+    .closebtn{
+        cursor: pointer;
+    }
+    .closebtn:hover{
+        color:red;
+    }
+}
+td{
+    label{
+        cursor:pointer;
+    }
+}
+#black-overlay{
+  //  display: none;
+  
+    width:100%;
+    height:100%;
+    background-color: #000;
+    opacity: 0.7;
+    position: fixed;
+    top:0px;
+    left:0px;
+    z-index: 1020;
+  }
+
+// .vdp-datepicker *{
+//     width:100%!important;
+// }
