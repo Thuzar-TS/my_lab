@@ -88525,8 +88525,10 @@ var index_esm = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__views_setups_States___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15__views_setups_States__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__views_setups_Brands__ = __webpack_require__(468);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__views_setups_Brands___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16__views_setups_Brands__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__views_setups_Categories__ = __webpack_require__(471);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__views_setups_Categories___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_17__views_setups_Categories__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__views_setups_DischargeTypes__ = __webpack_require__(488);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__views_setups_DischargeTypes___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_17__views_setups_DischargeTypes__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__views_setups_Categories__ = __webpack_require__(471);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__views_setups_Categories___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_18__views_setups_Categories__);
 
 
 
@@ -88535,6 +88537,7 @@ var index_esm = {
 
 
 // Views
+
 
 
 
@@ -88665,7 +88668,12 @@ var routes = [{
         }, {
             path: 'categories',
             name: 'Categories',
-            component: __WEBPACK_IMPORTED_MODULE_17__views_setups_Categories___default.a,
+            component: __WEBPACK_IMPORTED_MODULE_18__views_setups_Categories___default.a,
+            meta: { requiresAuth: true }
+        }, {
+            path: 'discharges',
+            name: 'DischargeTypes',
+            component: __WEBPACK_IMPORTED_MODULE_17__views_setups_DischargeTypes___default.a,
             meta: { requiresAuth: true }
         }]
     }]
@@ -92322,6 +92330,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }, {
       name: 'Categories',
       url: '/setups/categories',
+      icon: 'icon-puzzle'
+    }, {
+      name: 'Discharge Types',
+      url: '/setups/discharges',
       icon: 'icon-puzzle'
     }]
   }, {
@@ -106038,6 +106050,500 @@ module.exports = '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u20
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 476 */,
+/* 477 */,
+/* 478 */,
+/* 479 */,
+/* 480 */,
+/* 481 */,
+/* 482 */,
+/* 483 */,
+/* 484 */,
+/* 485 */,
+/* 486 */,
+/* 487 */,
+/* 488 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(489)
+/* template */
+var __vue_template__ = __webpack_require__(490)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/coreui/src/views/setups/DischargeTypes.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-bc7533c0", Component.options)
+  } else {
+    hotAPI.reload("data-v-bc7533c0", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 489 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+//import pagination from 'laravel-vue-pagination'
+//  Vue.component('pagination', require('laravel-vue-pagination'));
+/* harmony default export */ __webpack_exports__["default"] = ({
+  //   component: pagination,
+  data: function data() {
+    return {
+      pagenum: 1,
+      savebtn: true,
+      dischId: null,
+      disch: {
+        description: ""
+      },
+      discharges: []
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    var app = this;
+    axios.get("/api/discharges", {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      }
+    }).then(function (response) {
+      //console.log(response.data);
+      app.discharges = response.data;
+    }).catch(function (error) {
+      //console.log(error.response);
+      if (error.response.data.message == "Unauthenticated.") {
+        localStorage.removeItem("token");
+        store.commit("logoutUser");
+        _this.$router.push({ name: "login" });
+        alert("Session Expired. <br>Please Login Again.");
+      }
+    });
+  },
+
+  methods: {
+    getResults: function getResults(page) {
+      var _this2 = this;
+
+      var app = this;
+
+      if (typeof page === "undefined") {
+        page = 1;
+      }
+
+      axios.get("/api/discharges?page=" + page, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token")
+        }
+      }).then(function (response) {
+        app.pagenum = page;
+        app.discharges = response.data;
+      }).catch(function (error) {
+        if (error.response.data.message == "Unauthenticated.") {
+          localStorage.removeItem("token");
+          store.commit("logoutUser");
+          _this2.$router.push({ name: "login" });
+          alert("Session Expired. <br>Please Login Again.");
+        }
+      });
+    },
+    saveForm: function saveForm() {
+      var _this3 = this;
+
+      var app = this;
+      if (app.disch.description != "" && app.disch.description != null) {
+        var newdisch = app.disch;
+        axios.post("/api/discharges", newdisch, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token")
+          }
+        }).then(function (response) {
+          alert("New Discharge successfully saved.");
+          app.discharges = response.data;
+          app.cancelDisch();
+        }).catch(function (error) {
+          if (error.response.data.message == "Unauthenticated.") {
+            localStorage.removeItem("token");
+            store.commit("logoutUser");
+            _this3.$router.push({ name: "login" });
+            alert("Session Expired. <br>Please Login Again.");
+          }
+        });
+      } else {
+        alert("Please Fill Compelety.");
+      }
+    },
+    editDisch: function editDisch(id, name) {
+      //event.preventDefault();
+      var app = this;
+      app.disch.description = name;
+      app.dischId = id;
+      app.savebtn = false;
+      //console.log(app.discharges);
+      //edit and save button hidden true false
+    },
+    updateDisch: function updateDisch() {
+      var _this4 = this;
+
+      var app = this;
+      if (app.disch.description != "" && app.disch.description != null) {
+        var eddisch = app.disch;
+        console.log(app);
+        axios.post("/api/discharges/" + app.dischId, eddisch, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token")
+          }
+        }).then(function (response) {
+          alert("Discharge successfully edited.");
+          app.cancelDisch();
+          app.discharges = response.data;
+        }).catch(function (error) {
+          if (error.response.data.message == "Unauthenticated.") {
+            localStorage.removeItem("token");
+            store.commit("logoutUser");
+            _this4.$router.push({ name: "login" });
+            alert("Session Expired. <br>Please Login Again.");
+          }
+        });
+      } else {
+        alert("Please Fill Compelety.");
+      }
+    },
+    deleteDisch: function deleteDisch(id, index) {
+      var _this5 = this;
+
+      if (confirm("Do you really want to delete it?")) {
+        var app = this;
+        axios.delete("/api/discharges/" + id, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token")
+          }
+        }).then(function (resp) {
+          app.discharges.data.splice(index, 1);
+          //app.getResults(app.pagenum);
+          alert("Discharge successfully deleted.");
+        }).catch(function (error) {
+          if (error.response.data.message == "Unauthenticated.") {
+            localStorage.removeItem("token");
+            store.commit("logoutUser");
+            _this5.$router.push({ name: "login" });
+            alert("Session Expired. <br>Please Login Again.");
+          }
+        });
+      }
+    },
+    cancelDisch: function cancelDisch() {
+      var app = this;
+      app.savebtn = true;
+      app.disch.description = "";
+    }
+  }
+});
+
+/***/ }),
+/* 490 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "animated fadeIn" }, [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-8" }, [
+        _c("div", { staticClass: "card" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "card-block" },
+            [
+              _c("table", { staticClass: "table table-striped" }, [
+                _vm._m(1),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.discharges.data, function(disch, index) {
+                    return _c("tr", { key: disch.id }, [
+                      _c("td", [
+                        _vm._v(_vm._s((_vm.pagenum - 1) * 5 + (index + 1)))
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(disch.description))]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c(
+                          "label",
+                          {
+                            on: {
+                              click: function($event) {
+                                _vm.editDisch(disch.id, disch.description)
+                              }
+                            }
+                          },
+                          [
+                            _c("i", {
+                              staticClass:
+                                "fa fa-pencil-square-o fa-lg edit-btn"
+                            })
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c(
+                          "label",
+                          {
+                            on: {
+                              click: function($event) {
+                                _vm.deleteDisch(disch.id, index)
+                              }
+                            }
+                          },
+                          [
+                            _c("i", {
+                              staticClass: "fa fa-trash fa-lg del-btn"
+                            })
+                          ]
+                        )
+                      ])
+                    ])
+                  })
+                )
+              ]),
+              _vm._v(" "),
+              _c("pagination", {
+                attrs: { data: _vm.discharges },
+                on: { "pagination-change-page": _vm.getResults }
+              })
+            ],
+            1
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-4" }, [
+        _c("form", [
+          _c("div", { staticClass: "form-group row" }, [
+            _c("div", { staticClass: "input-field col-sm-12" }, [
+              _c("label", { attrs: { for: "unit" } }, [
+                _vm._v("New Discharge")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.disch.description,
+                    expression: "disch.description"
+                  }
+                ],
+                staticClass: "validate form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.disch.description },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.disch, "description", $event.target.value)
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            attrs: {
+              type: "hidden",
+              name: "_token",
+              value: "<?= csrf_token() ?>"
+            }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _vm.savebtn
+              ? _c(
+                  "label",
+                  {
+                    staticClass: "btn-primary btn",
+                    on: {
+                      click: function($event) {
+                        _vm.saveForm()
+                      }
+                    }
+                  },
+                  [_vm._v("Save")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            !_vm.savebtn
+              ? _c(
+                  "label",
+                  {
+                    staticClass: "btn-primary btn",
+                    on: {
+                      click: function($event) {
+                        _vm.updateDisch()
+                      }
+                    }
+                  },
+                  [_vm._v("Edit")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _c(
+              "label",
+              {
+                staticClass: "btn-primary btn",
+                on: {
+                  click: function($event) {
+                    _vm.cancelDisch()
+                  }
+                }
+              },
+              [_vm._v("Cancel")]
+            )
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "card-header",
+        staticStyle: { color: "#073528", "font-weight": "bold" }
+      },
+      [
+        _c("i", { staticClass: "fa fa-align-justify" }),
+        _vm._v(" Discharge Types\n            ")
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("No.")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Description")]),
+        _vm._v(" "),
+        _c("th", { staticStyle: { width: "20%" }, attrs: { colspan: "2" } }, [
+          _vm._v("Action")
+        ])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-bc7533c0", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

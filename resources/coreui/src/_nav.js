@@ -58,6 +58,11 @@ export default {
           name: 'Categories',
           url: '/setups/categories',
           icon: 'icon-puzzle'
+        },
+        {
+          name: 'Discharge Types',
+          url: '/setups/discharges',
+          icon: 'icon-puzzle'
         }
       ]
     },

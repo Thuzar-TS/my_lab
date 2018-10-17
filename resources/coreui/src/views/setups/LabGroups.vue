@@ -18,9 +18,9 @@
                         <tbody>
                             <tr v-for="(labg,index) in labgroups.data" :key="labg.id">
                                 <td>{{((pagenum-1)*5)+(index+1)}}</td>
-                                <td>{{labg.labgroup_name}}</td>
+                                <td>{{labg.group_name}}</td>
                                 <td>
-                                    <label v-on:click="editLabg(labg.id, labg.labgroup_name)">
+                                    <label v-on:click="editLabg(labg.id, labg.group_name)">
                                         <i class="fa fa-pencil-square-o fa-lg edit-btn"></i>
                                     </label>                                  
                                 </td>
@@ -35,42 +35,13 @@
                     <pagination :data="labgroups" @pagination-change-page="getResults"></pagination>
                 </div>
               </div>
-                <!-- <b-card header="<i class='fa fa-align-justify'></i> labgroups List">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>No.</th>
-                                <th>Description</th>
-                                <th colspan="2" style="width:30%;">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(labg,index) in labgroups.data" :key="labg.id">
-                                <td>{{((pagenum-1)*5)+(index+1)}}</td>
-                                <td>{{labg.labgroup_name}}</td>
-                                <td>
-                                    <label v-on:click="editLabg(labg.id, labg.labgroup_name)">
-                                        Edit
-                                    </label>                                  
-                                </td>
-                                <td>
-                                    <label v-on:click="deleteLabg(labg.id, index)">
-                                        Delete
-                                    </label>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <pagination :data="labgroups" @pagination-change-page="getResults"></pagination>
-                    
-                </b-card> -->
             </div>
             <div class="col-md-4">
                 <form>
                     <div class="form-group row">
                         <div class="input-field col-sm-12">
                             <label for="unit">New Lab Group</label>
-                            <input type="text" class="validate form-control" v-model="labg.labgroup_name">
+                            <input type="text" class="validate form-control" v-model="labg.group_name">
                         </div>
                     </div>
                     <input type="hidden" name="_token" value="<?= csrf_token() ?>">
@@ -96,7 +67,7 @@ export default {
       savebtn: true,
       labgId: null,
       labg: {
-        labgroup_name: ""
+        group_name: ""
       },
       labgroups: []
     };
@@ -154,7 +125,7 @@ export default {
 
     saveForm() {
       var app = this;
-      if (app.labg.labgroup_name != "" && app.labg.labgroup_name != null) {
+      if (app.labg.group_name != "" && app.labg.group_name != null) {
         var newlabg = app.labg;
         axios
           .post("/api/labgroups", newlabg, {
@@ -163,7 +134,7 @@ export default {
             }
           })
           .then(function(response) {
-            alert("New labgroup successfully saved.");
+            alert("New group successfully saved.");
             app.labgroups = response.data;
             app.cancelLabg();
           })
@@ -183,7 +154,7 @@ export default {
     editLabg(id, name) {
       //event.preventDefault();
       var app = this;
-      app.labg.labgroup_name = name;
+      app.labg.group_name = name;
       app.labgId = id;
       app.savebtn = false;
       //console.log(app.labgroups);
@@ -192,7 +163,7 @@ export default {
 
     updateLabg() {
       var app = this;
-      if (app.labg.labgroup_name != "" && app.labg.labgroup_name != null) {
+      if (app.labg.group_name != "" && app.labg.group_name != null) {
         var edlabg = app.labg;
         console.log(app);
         axios
@@ -202,7 +173,7 @@ export default {
             }
           })
           .then(function(response) {
-            alert("Labgroup successfully edited.");
+            alert("Group successfully edited.");
             app.cancelLabg();
             app.labgroups = response.data;
           })
@@ -231,7 +202,7 @@ export default {
           .then(function(resp) {
             app.labgroups.data.splice(index, 1);
             app.getResults(app.pagenum);
-            alert("Labgroup successfully deleted.");
+            alert("Group successfully deleted.");
           })
           .catch(error => {
             if (error.response.data.message == "Unauthenticated.") {
@@ -247,7 +218,7 @@ export default {
     cancelLabg() {
       var app = this;
       app.savebtn = true;
-      app.labg.labgroup_name = "";
+      app.labg.group_name = "";
     }
   }
 };

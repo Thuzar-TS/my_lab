@@ -20,6 +20,8 @@ import LabGroups from '../views/setups/LabGroups'
 import Units from '../views/setups/Units'
 import States from '../views/setups/States'
 import Brands from '../views/setups/Brands'
+import DischargeTypes from '../views/setups/DischargeTypes'
+import Items from '../views/setups/Items'
 import Categories from '../views/setups/Categories'
 
 Vue.use(Router)
@@ -149,6 +151,18 @@ const routes = [
                         path: 'categories',
                         name: 'Categories',
                         component: Categories,
+                        meta: { requiresAuth: true }
+                    },
+                    {
+                        path: 'discharges',
+                        name: 'DischargeTypes',
+                        component: DischargeTypes,
+                        meta: { requiresAuth: true }
+                    },
+                    {
+                        path: 'items',
+                        name: 'Items',
+                        component: Items,
                         meta: { requiresAuth: true }
                     }
                 ]
