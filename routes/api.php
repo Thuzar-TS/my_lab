@@ -38,6 +38,16 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('/categories/{id}', 'Api\V1\CategoryController@delete'); 
     Route::post('/categories/{id}', 'Api\V1\CategoryController@update');
 
+    Route::get('discharges', 'Api\V1\DischargeController@index');
+    Route::post('discharges', 'Api\V1\DischargeController@store');
+    Route::delete('/discharges/{id}', 'Api\V1\DischargeController@delete'); 
+    Route::post('/discharges/{id}', 'Api\V1\DischargeController@update');
+
+    Route::get('items', 'Api\V1\ItemController@index');
+    Route::post('items', 'Api\V1\ItemController@store');
+    Route::delete('/items/{id}', 'Api\V1\ItemController@delete'); 
+    Route::post('/items/{id}', 'Api\V1\ItemController@update');
+
     Route::get('labgroups', 'Api\V1\LabGroupController@index');
     Route::post('labgroups', 'Api\V1\LabGroupController@store');
     Route::delete('/labgroups/{id}', 'Api\V1\LabGroupController@delete'); 
