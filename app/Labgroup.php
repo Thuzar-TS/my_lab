@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Labgroup extends Model
 {
-      protected $table = 'lab_groups';
-    	protected $fillable = ['id', 'labgroup_name','user_id'];
+      protected $table = 'groups';
+    	protected $fillable = ['id', 'group_name','user_id'];
 }

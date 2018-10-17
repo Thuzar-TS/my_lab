@@ -19,9 +19,9 @@ class LabGroupController extends Controller
     }
 
     public function store(Request $request){
-        if ($request->labgroup_name) {
+        if ($request->group_name) {
             $sta = new Labgroup;
-            $sta->labgroup_name = $request->labgroup_name;
+            $sta->group_name = $request->group_name;
             $sta->user_id = Auth::user()->id;
             $sta->save();
         }
@@ -35,9 +35,9 @@ class LabGroupController extends Controller
     // }
 
     public function update(Request $request,$id){
-        if ($request->labgroup_name) {
+        if ($request->group_name) {
             $sta = Labgroup::find($id);
-            $sta->labgroup_name = $request->labgroup_name;
+            $sta->group_name = $request->group_name;
             $sta->user_id = Auth::user()->id;
             $sta->save();
         }
