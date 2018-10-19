@@ -21,25 +21,20 @@
                             <tbody>
                                 <tr v-for="(ite,index) in items.data" :key="ite.id">
                                     <td width="50">{{((pagenum-1)*3)+(index+1)}}.</td>
-                                    <td>
+                                    <td>                                       
                                         
-                                        <i class="icon-user-female icons" v-if="ite.gender=='2'"  style="font-size:0.9em;color:#f90bab;font-weight:bold;"></i>
-                                        <i class="icon-user icons" v-if="ite.gender=='1'" style="font-size:0.9em;color:blue;font-weight:bold;"></i>
-                                        <a href="#" title="Profile" style="font-size:0.9em;font-weight:bold;color:green;text-transform: uppercase;">{{ite.item_name}}</a>&nbsp;
-                                        <span v-if="ite.itemstatus==1" class="float-right" style="color:orange;font-size:0.9em;">
-                                        <i class="fa fa-hospital-o"></i> Initem</span>
-                                        <span v-if="ite.itemstatus==2" class="float-right" style="color:orange;font-size:0.9em;">
-                                        <i class="fa fa-hospital-o"></i> OPD</span>
+                                        <a href="#" title="Profile" style="font-size:0.9em;font-weight:bold;color:green;text-transform: uppercase;">{{ite.description}}</a>&nbsp;
+                                        
                                         <br>
                                         <span class="badge badge-success tbl-btn tbl-btn-success" style="letter-spacing: 1px;font-weight:bold;">
-                                        {{ite.item_reference}}
+                                        {{ite.item_code}}
                                         </span>
                                         
-                                        <span style="color:red;font-size:0.9em;">[ {{ite.blood_type}} Blood ]</span>
+                                        <span style="color:red;font-size:0.9em;">[ {{ite.short_description}} ]</span>
                                         <br>
-                                        <span style="font-size:0.9em;font-weight:normal;">
-                                            <i class="fa fa-calendar" style="color:blue"></i> {{ite.dob}} ({{ite.age}} years)</span><br>
-                                        <span style="font-size:0.9em;font-weight:normal;">{{ite.occuiteion}} ({{ite.marital_status}})</span> 
+                                       
+                                        <span style="font-size:0.9em;font-weight:normal;">{{ite.group_name}} ({{ite.typedes}})</span><br> 
+                                        <span style="font-size:0.9em;font-weight:normal;">{{ite.vendor_name}}</span> 
                                         <br><br>
                                         <a title="edit" v-on:click="editIte(ite.id)">
                                         <span class="badge badge-success tbl-btn tbl-btn-success badge-edit-btn">
@@ -91,13 +86,14 @@
                             </div>
 
                             <div class="form-group">
-                                <input required v-model="ite.short_description" type="text" class="validate form-control">                          
+                                <label for="item">Short Description</label>
+                                <input required v-model="ite.short_description" placeholder="Short Description" type="text" class="validate form-control">                          
                             </div>
 
                             <div class="form-group">
                                 <label for="item">Item Code</label>
                                 <input placeholder="Code" required v-model="ite.item_code" type="text" class="validate form-control">                          
-                            </div>
+                            </div> 
 
                             <div class="form-group">
                                 <b-form-fieldset label="Item Type">
@@ -106,7 +102,12 @@
                                         <option v-for="item in itemtypes" :value="item.id" :key="item.id">{{item.description}}</option>
                                     </b-form-select>
                                 </b-form-fieldset>                              
-                            </div>
+                            </div>                                
+
+                        </div>
+
+                        <div class="col-sm-3">
+                            
 
                             <div class="form-group">
                                 <b-form-fieldset label="Group">
@@ -118,187 +119,103 @@
                             </div>
 
                             <div class="form-group">
-                                <!-- <label>Gender</label> -->
-                                <div class="row">               
-                                <div class="col-sm-6">
-                                <div class="radio">
-                                <label for="mradio">
-                                    <input type="radio" id="mradio" v-model="ite.gender" value="1"> Male
-                                </label>
-                                </div>  
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="radio">
-                                <label for="fradio">
-                                    <input type="radio" id="fradio" v-model="ite.gender" value="2"> Female
-                                </label>
-                                </div>
-                                </div>
-                                </div>
-                            </div>                            
-                            <div class="row">
-                                <div class="col-sm-9">
-                                    <div class="form-group" id="date">
-                                        <label for="dob">Date of Birth</label>
-                                        <datepicker v-model="ite.dob" :format="customFormatter"></datepicker>
-                                        <!-- <input v-model="ite.dob" id="dob" type="text" class="validate form-control">  -->
-                                    </div>
-                                </div>
-                                <div class="col-sm-3" style="padding-left:0px;">
-                                    <div class="form-group">
-                                        <label for="age">Age</label>
-                                        <input v-model="ite.age" id="age" required type="text" class="validate form-control">                          
-                                    </div>
-                                </div>
-                            </div> 
-                            <div class="form-group">
-                                <!-- <label>Marital Status</label> -->
-                                <div class="row">               
-                                <div class="col-sm-6">
-                                <div class="radio">
-                                <label for="sradio">
-                                    <input type="radio" id="sradio" v-model="ite.marital_status" value="Single"> Single
-                                </label>
-                                </div>  
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="radio">
-                                <label for="maradio">
-                                    <input type="radio" id="maradio" v-model="ite.marital_status" value="Married"> Married
-                                </label>
-                                </div>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label>Blood Type</label>
-                                <div class="row">               
-                                    <div class="col-sm-3" style="padding-right:0px;">
-                                        <div class="radio">
-                                            <label for="ablood">
-                                                <input type="radio" id="ablood" v-model="ite.blood_type" value="A"> A
-                                            </label>
-                                        </div>  
-                                    </div>
-                                    <div class="col-sm-3" style="padding-right:0px;">
-                                        <div class="radio">
-                                            <label for="bblood">
-                                                <input type="radio" id="bblood" v-model="ite.blood_type" value="B"> B
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3" style="padding-right:0px;">
-                                        <div class="radio">
-                                            <label for="abblood">
-                                                <input type="radio" id="abblood" v-model="ite.blood_type" value="AB"> AB
-                                            </label>
-                                        </div>  
-                                    </div>
-                                    <div class="col-sm-3" style="padding-right:0px;">
-                                        <div class="radio">
-                                            <label for="oblood">
-                                                <input type="radio" id="oblood" v-model="ite.blood_type" value="O"> O
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <b-form-fieldset>
-                                    <b-form-checkbox value="1" v-model="ite.allergy" style="cursor:pointer;">Allergy</b-form-checkbox>
-                                </b-form-fieldset>                               
-                            </div>
-
-                            <div class="form-group">                                
-                                <div class="row">               
-                                    <div class="col-sm-6">
-                                        <div class="radio">
-                                            <label for="inpa">
-                                                <input type="radio" id="inpa" v-model="ite.itemstatus" value="1"> Initem
-                                            </label>
-                                        </div>  
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="radio">
-                                            <label for="opd">
-                                                <input type="radio" id="opd" v-model="ite.itemstatus" value="2"> OPD
-                                            </label>
-                                        </div>
-                                    </div>                                    
-                                </div>
-
-                            </div>                            
-
-                            <div class="form-group">
-                                <label for="nationality">Nationality</label>
-                                <input placeholder="Nationality" v-model="ite.nationality" id="nationality" type="text" class="validate form-control">                          
-                            </div>
-
-                            <div class="form-group">
-                                <label for="religion">Religion</label>
-                                <input v-model="ite.religion" placeholder="Religion" id="religion" type="text" class="validate form-control">                          
-                            </div>
-
-                            <div class="form-group">
-                                <label for="occuiteion">Occuiteion</label>
-                                <input v-model="ite.occuiteion" placeholder="Occuiteion" id="occuiteion" type="text" class="validate form-control">                          
-                            </div>
-                        </div>
-                        
-                        <div class="col-sm-3">  
-                            <div class="form-group">
-                                <label for="fa">Father's Name</label>
-                                <input placeholder="Father's Name" id="fa" v-model="ite.father_name" type="text" class="validate form-control">                          
-                            </div>
-
-                            <div class="form-group">
-                                <label for="mom">Mother's Name</label>
-                                <input placeholder="Mother's Name" id="mom" v-model="ite.mother_name" type="text" class="validate form-control">                          
-                            </div>                            
-
-                            <div class="form-group">
-                                <label for="phone">Phone</label>
-                                <input placeholder="Phone" required id="phone" v-model="ite.phone" type="text" class="validate form-control">                          
-                            </div>
-
-                            <div class="form-group">
-                                <label for="fax">Fax</label>
-                                <input placeholder="Fax" v-model="ite.fax" id="fax" type="text" class="validate form-control">                          
-                            </div>                            
-
-                            <div class="form-group">
-                                <label for="email">E-mail</label>
-                                <input placeholder="E-mail" v-model="ite.email" id="email" type="text" class="validate form-control">                          
-                            </div>
-                        </div>
-
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label for="address">Address</label>
-                                <textarea  class="validate form-control" placeholder="Address in details" id="address" v-model="ite.address" rows="3"></textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="city">City</label>
-                                <input v-model="ite.city" placeholder="City" id="city" type="text" class="validate form-control">                          
-                            </div>
-
-                            <div class="form-group">
-                                <b-form-fieldset label="State">
-                                    <b-form-select v-model="ite.state_id">
+                                <b-form-fieldset label="Category">
+                                    <b-form-select v-model="ite.category_id">
                                         <option value="0">-- Choose --</option>
-                                        <option v-for="item in states" :value="item.id" :key="item.id">{{item.state_name}}</option>
+                                        <option v-for="item in categories" :value="item.id" :key="item.id">{{item.category_name}}</option>
                                     </b-form-select>
                                 </b-form-fieldset>                              
                             </div>
 
                             <div class="form-group">
-                                <label for="remark">Remark</label>
-                                <textarea  class="validate form-control" placeholder="Remark in details" id="remark" v-model="ite.remark" rows="3"></textarea>
+                                <b-form-fieldset label="Brand">
+                                    <b-form-select v-model="ite.brand_id">
+                                        <option value="0">-- Choose --</option>
+                                        <option v-for="item in brands" :value="item.id" :key="item.id">{{item.brand_name}}</option>
+                                    </b-form-select>
+                                </b-form-fieldset>                              
+                            </div> 
+
+                            <div class="form-group">
+                                <b-form-fieldset label="Vendor">
+                                    <b-form-select v-model="ite.lastvendor_id">
+                                        <option value="0">-- Choose --</option>
+                                        <option v-for="item in vendors" :value="item.id" :key="item.id">{{item.vendor_name}}</option>
+                                    </b-form-select>
+                                </b-form-fieldset>                              
+                            </div>                            
+                        </div>
+
+                        <div class="col-sm-3">  
+                                                    
+
+                            <div class="form-group" id="date">
+                                <label for="dob">Expired Date</label>
+                                <datepicker v-model="ite.expired_date" :format="customFormatter"></datepicker>
+                            </div>
+
+                            <div class="form-group" id="date">
+                                <label for="dob">Last Purchase Date</label>
+                                <datepicker v-model="ite.lastpurchase_date" :format="customFormatter"></datepicker>
+                            </div>
+
+                            <div class="form-group" id="date">
+                                <label for="dob">Last Sale Date</label>
+                                <datepicker v-model="ite.lastsale_date" :format="customFormatter"></datepicker>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">               
+                        
+                            <div class="form-group">
+                                <label for="nationality">Sale Account</label>
+                                <input placeholder="Account Number" v-model="ite.sale_account_number" type="text" class="validate form-control">                          
+                            </div>
+
+                            <div class="form-group">
+                                <label for="religion">Purchase Account</label>
+                                <input v-model="ite.purchase_account_number" placeholder="Account Number" type="text" class="validate form-control">                          
+                            </div>
+
+                            <div class="form-group">
+                                <label for="occuiteion">Sale Return Account</label>
+                                <input v-model="ite.salereturn_account_number" placeholder="Account Number" type="text" class="validate form-control">                          
+                            </div>
+
+                            <div class="form-group">
+                                <label for="occuiteion">Purchase Return Account</label>
+                                <input v-model="ite.purchasereturn_account_number" placeholder="Account Number" type="text" class="validate form-control">                          
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="row bottom-clear">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <b-form-fieldset>
+                                    <b-form-checkbox value="1" v-model="ite.inactive" style="cursor:pointer;">Inactive</b-form-checkbox>
+                                </b-form-fieldset>                               
+                            </div>                                                                                   
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <b-form-fieldset>
+                                    <b-form-checkbox value="1" v-model="ite.ismultilevel" style="cursor:pointer;">Multi Level</b-form-checkbox>
+                                </b-form-fieldset>                               
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <b-form-fieldset>
+                                    <b-form-checkbox value="1" v-model="ite.usebarcode" style="cursor:pointer;">Barcode</b-form-checkbox>
+                                </b-form-fieldset>                               
+                            </div> 
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <b-form-fieldset>
+                                    <b-form-checkbox value="1" v-model="ite.useexpire" style="cursor:pointer;">Expired</b-form-checkbox>
+                                </b-form-fieldset>                               
                             </div>
                         </div>
                     </div>                   
@@ -368,8 +285,13 @@ export default {
         }
       })
       .then(response => {
+          console.log(response.data);
         app.items = response.data.items;
-        app.states = response.data.states;
+        app.groups = response.data.groups;
+        app.categories = response.data.categories;
+        app.brands = response.data.brands;
+        app.vendors = response.data.vendors;
+        app.itemtypes = response.data.itemtypes;
       })
       .catch(error => {
         if (error.response.data.message == "Unauthenticated.") {
@@ -401,7 +323,11 @@ export default {
         .then(response => {
           app.pagenum = page;
           app.items = response.data.items;
-          // console.log(app.items.length);
+          app.groups = response.data.groups;
+          app.categories = response.data.categories;
+          app.brands = response.data.brands;
+          app.vendors = response.data.vendors;
+          app.itemtypes = response.data.itemtypes;
         })
         .catch(error => {
           if (error.response.data.message == "Unauthenticated.") {
@@ -413,30 +339,20 @@ export default {
         });
     },
 
-    newIte() {
-      //document.body.classList.toggle("sidebar-minimized");
-
-      // console.log(document.body.classList.length)
-      // console.log(document.body.classList.toggle('sidebar-minimized'))
-      // document.getElementsByTagName("body").classList.contains("sidebar-minimized");
-      if (document.body.classList.length < 6) {
-        //console.log("here");
-        //document.getElementById("mytoggleclose").click();
+    newIte() {  
+      if (document.body.classList.length < 6) {  
         document.body.classList.toggle("sidebar-minimized");
       }
 
       this.cancelIte();
       this.showsetup = true;
-
-      //   document.getElementById("testingid").classList.toggle("close");
-      //   document.getElementsByTagName("body").addClass("sidebar-minimized");
-      //  var root = document.documentElement;
-      //  root.className += ' sidebar-minimized';
     },
 
     saveForm() {
       var app = this;
       var newIte = app.ite;
+      console.log(app.ite.inactive);
+      console.log(app.ite.lastpurchase_date);
       axios
         .post("/api/items", newIte, {
           headers: {
@@ -444,9 +360,14 @@ export default {
           }
         })
         .then(function(response) {
+          //  console.log(response.data);
           alert("New item successfully saved.");
           app.items = response.data.items;
-          app.states = response.data.states;
+          app.groups = response.data.groups;
+          app.categories = response.data.categories;
+          app.brands = response.data.brands;
+          app.vendors = response.data.vendors;
+          app.itemtypes = response.data.itemtypes;
           app.cancelIte();
         })
         .catch(error => {
@@ -476,7 +397,11 @@ export default {
         .then(response => {
           //console.log(response.data);
           app.ite = response.data.items;
-          app.states = response.data.states;
+          app.groups = response.data.groups;
+          app.categories = response.data.categories;
+          app.brands = response.data.brands;
+          app.vendors = response.data.vendors;
+          app.itemtypes = response.data.itemtypes;
         })
         .catch(error => {
           if (error.response.data.message == "Unauthenticated.") {
@@ -503,7 +428,11 @@ export default {
           alert("item successfully Edited.");
           app.cancelIte();
           app.items = response.data.items;
-          app.states = response.data.states;
+          app.groups = response.data.groups;
+          app.categories = response.data.categories;
+          app.brands = response.data.brands;
+          app.vendors = response.data.vendors;
+          app.itemtypes = response.data.itemtypes;
         })
         .catch(error => {
           if (error.response.data.message == "Unauthenticated.") {

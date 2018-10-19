@@ -18129,6 +18129,10 @@ hr.transparent {
   margin-bottom: 0px;
 }
 
+#whiteoverlay .card-block {
+  padding-bottom: 5px;
+}
+
 #whiteoverlay .card-footer {
   padding-bottom: 5px;
 }
@@ -18154,5 +18158,15 @@ td label {
   top: 0px;
   left: 0px;
   z-index: 1020;
+}
+
+.bottom-clear {
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+  margin-top: 10px;
+}
+
+.bottom-clear .form-group {
+  margin-bottom: 0px;
 }
 

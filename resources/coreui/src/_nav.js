@@ -30,6 +30,11 @@ export default {
           icon: 'fa fa-user-md'
         },
         {
+          name: 'Items',
+          url: '/setups/items',
+          icon: 'icon-puzzle'
+        },
+        {
           name: 'Groups',
           url: '/setups/labgroups',
           icon: 'fa fa-usb'
@@ -62,6 +67,11 @@ export default {
         {
           name: 'Discharge Types',
           url: '/setups/discharges',
+          icon: 'icon-puzzle'
+        },
+        {
+          name: 'Vendors',
+          url: '/setups/vendors',
           icon: 'icon-puzzle'
         }
       ]
