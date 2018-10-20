@@ -20,7 +20,7 @@ export default {
         }
       })
       .then(response => {
-        console.log(response);
+       // console.log(response);
         this.data = response.data.data;
       })
       .catch(error => {

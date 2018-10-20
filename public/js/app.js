@@ -95165,7 +95165,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         Authorization: "Bearer " + localStorage.getItem("token")
       }
     }).then(function (response) {
-      console.log(response);
+      // console.log(response);
       _this.data = response.data.data;
     }).catch(function (error) {
 
@@ -106751,44 +106751,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 window.moment = __webpack_require__(0);
@@ -106802,34 +106764,27 @@ window.moment = __webpack_require__(0);
       pagenum: 1,
       showsetup: false,
       savebtn: true,
-      patId: null,
-      pat: {
+      venId: null,
+      ven: {
         vendor_name: "",
-        vendor_reference: "",
-        nrc: "",
-        age: "",
-        gender: 1,
+        vendor_type_id: 0,
+        contact_name: "",
+        phone: "",
+        address: "",
         dob: new Date(),
-        blood_type: "A",
-        marital_status: "Single",
+        state_id: 0,
         city: "",
         country: "",
-        nationality: "",
-        address: "",
-        religion: "",
-        state_id: 0,
-        father_name: "",
-        mother_name: "",
-        occupation: "",
-        phone: "",
-        fax: "",
-        email: "",
-        allergy: true,
+        website: "",
+        balance: "",
+        account_number: "",
+        purchase_account_number: "",
         remark: "",
-        vendorstatus: 1
+        email: ""
       },
       vendors: [],
-      states: []
+      states: [],
+      vendortypes: []
     };
   },
   mounted: function mounted() {
@@ -106841,6 +106796,7 @@ window.moment = __webpack_require__(0);
         Authorization: "Bearer " + localStorage.getItem("token")
       }
     }).then(function (response) {
+      console.log(response.data);
       app.vendors = response.data.vendors;
       app.states = response.data.states;
     }).catch(function (error) {
@@ -106884,32 +106840,22 @@ window.moment = __webpack_require__(0);
         }
       });
     },
-    newPat: function newPat() {
-      //document.body.classList.toggle("sidebar-minimized");
-
-      // console.log(document.body.classList.length)
-      // console.log(document.body.classList.toggle('sidebar-minimized'))
-      // document.getElementsByTagName("body").classList.contains("sidebar-minimized");
+    newVen: function newVen() {
       if (document.body.classList.length < 6) {
         //console.log("here");
         //document.getElementById("mytoggleclose").click();
         document.body.classList.toggle("sidebar-minimized");
       }
 
-      this.cancelPat();
+      this.cancelVen();
       this.showsetup = true;
-
-      //   document.getElementById("testingid").classList.toggle("close");
-      //   document.getElementsByTagName("body").addClass("sidebar-minimized");
-      //  var root = document.documentElement;
-      //  root.className += ' sidebar-minimized';
     },
     saveForm: function saveForm() {
       var _this3 = this;
 
       var app = this;
-      var newPat = app.pat;
-      axios.post("/api/vendors", newPat, {
+      var newVen = app.ven;
+      axios.post("/api/vendors", newVen, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token")
         }
@@ -106917,7 +106863,7 @@ window.moment = __webpack_require__(0);
         alert("New vendor successfully saved.");
         app.vendors = response.data.vendors;
         app.states = response.data.states;
-        app.cancelPat();
+        app.cancelVen();
       }).catch(function (error) {
         if (error.response.data.message == "Unauthenticated.") {
           localStorage.removeItem("token");
@@ -106927,7 +106873,7 @@ window.moment = __webpack_require__(0);
         }
       });
     },
-    editPat: function editPat(id) {
+    editVen: function editVen(id) {
       var _this4 = this;
 
       if (document.body.classList.length < 6) {
@@ -106935,7 +106881,7 @@ window.moment = __webpack_require__(0);
       }
       this.showsetup = true;
       var app = this;
-      app.patId = id;
+      app.venId = id;
       app.savebtn = false;
       axios.get("/api/vendors/" + id, {
         headers: {
@@ -106943,7 +106889,7 @@ window.moment = __webpack_require__(0);
         }
       }).then(function (response) {
         //console.log(response.data);
-        app.pat = response.data.vendors;
+        app.ven = response.data.vendors;
         app.states = response.data.states;
       }).catch(function (error) {
         if (error.response.data.message == "Unauthenticated.") {
@@ -106954,20 +106900,20 @@ window.moment = __webpack_require__(0);
         }
       });
     },
-    updatePat: function updatePat() {
+    updateVen: function updateVen() {
       var _this5 = this;
 
       var app = this;
-      var edpat = app.pat;
-      // console.log("edpat" + edpat);
-      // console.log("patid" + app.patId);
-      axios.post("/api/vendors/" + app.patId, edpat, {
+      var edven = app.ven;
+      // console.log("edven" + edven);
+      // console.log("venid" + app.venId);
+      axios.post("/api/vendors/" + app.venId, edven, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token")
         }
       }).then(function (response) {
         alert("vendor successfully Edited.");
-        app.cancelPat();
+        app.cancelVen();
         app.vendors = response.data.vendors;
         app.states = response.data.states;
       }).catch(function (error) {
@@ -106979,7 +106925,7 @@ window.moment = __webpack_require__(0);
         }
       });
     },
-    deletePat: function deletePat(id, index) {
+    deleteVen: function deleteVen(id, index) {
       var _this6 = this;
 
       if (confirm("Do you really want to delete it?")) {
@@ -107001,7 +106947,7 @@ window.moment = __webpack_require__(0);
         });
       }
     },
-    cancelPat: function cancelPat() {
+    cancelVen: function cancelVen() {
       var app = this;
       app.savebtn = true;
       app.showsetup = false;
@@ -107022,7 +106968,7 @@ window.moment = __webpack_require__(0);
       app.ven.father_name = "";
       app.ven.state_id = 0;
       app.ven.mother_name = "";
-      app.ven.occupation = "";
+      app.ven.occuvenion = "";
       app.ven.phone = "";
       app.ven.fax = "";
       app.ven.email = "";
@@ -107057,7 +107003,7 @@ var render = function() {
             },
             [
               _c("i", { staticClass: "fa fa-align-justify" }),
-              _vm._v(" vendors List "),
+              _vm._v(" Vendors List "),
               _c(
                 "span",
                 {
@@ -107065,7 +107011,7 @@ var render = function() {
                   staticStyle: { cursor: "pointer" },
                   on: {
                     click: function($event) {
-                      _vm.newPat()
+                      _vm.newVen()
                     }
                   }
                 },
@@ -107092,28 +107038,6 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("td", [
-                        ven.gender == "2"
-                          ? _c("i", {
-                              staticClass: "icon-user-female icons",
-                              staticStyle: {
-                                "font-size": "0.9em",
-                                color: "#f90bab",
-                                "font-weight": "bold"
-                              }
-                            })
-                          : _vm._e(),
-                        _vm._v(" "),
-                        ven.gender == "1"
-                          ? _c("i", {
-                              staticClass: "icon-user icons",
-                              staticStyle: {
-                                "font-size": "0.9em",
-                                color: "blue",
-                                "font-weight": "bold"
-                              }
-                            })
-                          : _vm._e(),
-                        _vm._v(" "),
                         _c(
                           "a",
                           {
@@ -107127,41 +107051,9 @@ var render = function() {
                           },
                           [_vm._v(_vm._s(ven.vendor_name))]
                         ),
-                        _vm._v(" \n                                    "),
-                        ven.vendorstatus == 1
-                          ? _c(
-                              "span",
-                              {
-                                staticClass: "float-right",
-                                staticStyle: {
-                                  color: "orange",
-                                  "font-size": "0.9em"
-                                }
-                              },
-                              [
-                                _c("i", { staticClass: "fa fa-hospital-o" }),
-                                _vm._v(" Invendor")
-                              ]
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        ven.vendorstatus == 2
-                          ? _c(
-                              "span",
-                              {
-                                staticClass: "float-right",
-                                staticStyle: {
-                                  color: "orange",
-                                  "font-size": "0.9em"
-                                }
-                              },
-                              [
-                                _c("i", { staticClass: "fa fa-hospital-o" }),
-                                _vm._v(" OPD")
-                              ]
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
+                        _vm._v(
+                          "                                         \n                                    "
+                        ),
                         _c("br"),
                         _vm._v(" "),
                         _c(
@@ -107177,7 +107069,7 @@ var render = function() {
                           [
                             _vm._v(
                               "\n                                    " +
-                                _vm._s(ven.vendor_reference) +
+                                _vm._s(ven.vtypename) +
                                 "\n                                    "
                             )
                           ]
@@ -107188,7 +107080,7 @@ var render = function() {
                           {
                             staticStyle: { color: "red", "font-size": "0.9em" }
                           },
-                          [_vm._v("[ " + _vm._s(ven.blood_type) + " Blood ]")]
+                          [_vm._v("[ " + _vm._s(ven.state_name) + " ]")]
                         ),
                         _vm._v(" "),
                         _c("br"),
@@ -107227,7 +107119,7 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              _vm._s(ven.occupation) +
+                              _vm._s(ven.occuvenion) +
                                 " (" +
                                 _vm._s(ven.marital_status) +
                                 ")"
@@ -107244,7 +107136,7 @@ var render = function() {
                             attrs: { title: "edit" },
                             on: {
                               click: function($event) {
-                                _vm.editPat(ven.id)
+                                _vm.editVen(ven.id)
                               }
                             }
                           },
@@ -107270,7 +107162,7 @@ var render = function() {
                             attrs: { title: "delete" },
                             on: {
                               click: function($event) {
-                                _vm.deletePat(ven.id, index)
+                                _vm.deleteVen(ven.id, index)
                               }
                             }
                           },
@@ -107426,7 +107318,7 @@ var render = function() {
                 on: {
                   submit: function($event) {
                     $event.preventDefault()
-                    _vm.savebtn == true ? _vm.saveForm() : _vm.updatePat()
+                    _vm.savebtn == true ? _vm.saveForm() : _vm.updateVen()
                   }
                 }
               },
@@ -107438,7 +107330,7 @@ var render = function() {
                     staticClass: "fa fa-close float-right closebtn",
                     on: {
                       click: function($event) {
-                        _vm.cancelPat()
+                        _vm.cancelVen()
                       }
                     }
                   })
@@ -108107,8 +107999,8 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "occupation" } }, [
-                          _vm._v("Occupation")
+                        _c("label", { attrs: { for: "occuvenion" } }, [
+                          _vm._v("Occuvenion")
                         ]),
                         _vm._v(" "),
                         _c("input", {
@@ -108116,17 +108008,17 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.ven.occupation,
-                              expression: "ven.occupation"
+                              value: _vm.ven.occuvenion,
+                              expression: "ven.occuvenion"
                             }
                           ],
                           staticClass: "validate form-control",
                           attrs: {
-                            placeholder: "Occupation",
-                            id: "occupation",
+                            placeholder: "Occuvenion",
+                            id: "occuvenion",
                             type: "text"
                           },
-                          domProps: { value: _vm.ven.occupation },
+                          domProps: { value: _vm.ven.occuvenion },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
@@ -108134,7 +108026,7 @@ var render = function() {
                               }
                               _vm.$set(
                                 _vm.ven,
-                                "occupation",
+                                "occuvenion",
                                 $event.target.value
                               )
                             }
@@ -108478,7 +108370,7 @@ var render = function() {
                       staticStyle: { "margin-top": "8px" },
                       on: {
                         click: function($event) {
-                          _vm.cancelPat()
+                          _vm.cancelVen()
                         }
                       }
                     },

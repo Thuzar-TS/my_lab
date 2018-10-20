@@ -5,10 +5,9 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header" style="color:#073528;font-weight:bold;">
-                        <i class='fa fa-align-justify'></i> vendors List <span class='badge badge-primary float-right add-btn' v-on:click='newPat()' style='cursor:pointer;'><i class='fa fa-plus fa-lg'></i></span>
+                        <i class='fa fa-align-justify'></i> Vendors List <span class='badge badge-primary float-right add-btn' v-on:click='newVen()' style='cursor:pointer;'><i class='fa fa-plus fa-lg'></i></span>
                     </div>
                     <div class="card-block">                        
-                        <!-- <datepicker v-model="ven.dob" name="uniquename" :format="customFormatter"></datepicker>{{ven.dob}} -->
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -22,34 +21,23 @@
                             <tbody>
                                 <tr v-for="(ven,index) in vendors.data" :key="ven.id">
                                     <td width="50">{{((pagenum-1)*3)+(index+1)}}.</td>
-                                    <td>
-                                        
-                                        <i class="icon-user-female icons" v-if="ven.gender=='2'"  style="font-size:0.9em;color:#f90bab;font-weight:bold;"></i>
-                                        <i class="icon-user icons" v-if="ven.gender=='1'" style="font-size:0.9em;color:blue;font-weight:bold;"></i>
-                                        <a href="#" title="Profile" style="font-size:0.9em;font-weight:bold;color:green;text-transform: uppercase;">{{ven.vendor_name}}</a>&nbsp;
-                                        <span v-if="ven.vendorstatus==1" class="float-right" style="color:orange;font-size:0.9em;">
-                                        <i class="fa fa-hospital-o"></i> Invendor</span>
-                                        <span v-if="ven.vendorstatus==2" class="float-right" style="color:orange;font-size:0.9em;">
-                                        <i class="fa fa-hospital-o"></i> OPD</span>
+                                    <td>                                        
+                                        <a href="#" title="Profile" style="font-size:0.9em;font-weight:bold;color:green;text-transform: uppercase;">{{ven.vendor_name}}</a>&nbsp;                                        
                                         <br>
                                         <span class="badge badge-success tbl-btn tbl-btn-success" style="letter-spacing: 1px;font-weight:bold;">
-                                        {{ven.vendor_reference}}
+                                        {{ven.vtypename}}
                                         </span>
-                                        <!-- <span class=" tbl-btn tbl-btn-gold" style="font-size:0.9em;font-weight:normal;letter-spacing: 1px;">
-                                        {{ven.vendor_reference}}
-                                        </span> -->
-                                        <span style="color:red;font-size:0.9em;">[ {{ven.blood_type}} Blood ]</span>
+                                        <span style="color:red;font-size:0.9em;">[ {{ven.state_name}} ]</span>
                                         <br>
                                         <span style="font-size:0.9em;font-weight:normal;">
                                             <i class="fa fa-calendar" style="color:blue"></i> {{ven.dob}} ({{ven.age}} years)</span><br>
-                                        <span style="font-size:0.9em;font-weight:normal;">{{ven.occupation}} ({{ven.marital_status}})</span> 
-                                        <br><br>
-                                        <!-- <span v-if="ven.allergy==0" style="color:red;font-weight:bold;font-size:0.9em;">Allergy</span><br> -->
-                                        <a title="edit" v-on:click="editPat(ven.id)">
+                                        <span style="font-size:0.9em;font-weight:normal;">{{ven.occuvenion}} ({{ven.marital_status}})</span> 
+                                        <br><br>                                        
+                                        <a title="edit" v-on:click="editVen(ven.id)">
                                         <span class="badge badge-success tbl-btn tbl-btn-success badge-edit-btn">
                                         Edit
                                         </span></a>
-                                        <a title="delete" v-on:click="deletePat(ven.id, index)">
+                                        <a title="delete" v-on:click="deleteVen(ven.id, index)">
                                         <span class="badge badge-danger tbl-btn tbl-btn-danger badge-del-btn">
                                         Delete
                                         </span></a>  <span v-if="ven.allergy==1" class="float-right" style="color:red;font-size:0.9em;">
@@ -77,40 +65,14 @@
                         <pagination :data="vendors" @pagination-change-page="getResults"></pagination>
                     </div>
                 </div>
-            </div>
-            <!-- <div class="col-md-4">
-                <form>
-                    <div class="form-group row">
-                        <div class="input-field col-sm-12">
-                            <label for="unit">New vendor</label>
-                            <input type="text" class="validate form-control" required v-model="ven.vendor_name">
-                        </div>
-                    </div>
-                    <input type="hidden" name="_token" value="<?= csrf_token() ?>">
-                    <div class="form-group">
-                        <label class="btn-primary btn" v-if="savebtn" v-on:click="saveForm()">Save</label>
-                        <label class="btn-primary btn" v-if="!savebtn" v-on:click="updatePat()">Edit</label>
-                        <label class="btn-primary btn" v-on:click="cancelPat()">Cancel</label>
-                    </div>
-                </form>
-            </div> -->
+            </div>            
         </div>
         <div class="col-sm-10" v-if="showsetup" id="whiteoverlay">
             <div class="card">
-                <form v-on:submit.prevent="savebtn==true?saveForm():updatePat()">
+                <form v-on:submit.prevent="savebtn==true?saveForm():updateVen()">
                 <div class="card-header">
-                    <i class="fa fa-user-md"></i>vendor Setup <i v-on:click="cancelPat()" class="fa fa-close float-right closebtn"></i>
+                    <i class="fa fa-user-md"></i>vendor Setup <i v-on:click="cancelVen()" class="fa fa-close float-right closebtn"></i>
                 </div>
-                <!-- <div class="card-block">
-                    <div class="form-group row">
-                        <div class="input-field col-sm-12">
-                            <label for="unit">New vendor</label>
-                            <input type="text" class="validate form-control" required v-model="ven.vendor_name">
-                        </div>
-                    </div>
-                    <input type="hidden" name="_token" value="<?= csrf_token() ?>">
-                    
-                </div> -->
                 <div class="card-block">
                     <div class="row">
                         <div class="col-sm-3">
@@ -257,8 +219,8 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="occupation">Occupation</label>
-                                <input v-model="ven.occupation" placeholder="Occupation" id="occupation" type="text" class="validate form-control">                          
+                                <label for="occuvenion">Occuvenion</label>
+                                <input v-model="ven.occuvenion" placeholder="Occuvenion" id="occuvenion" type="text" class="validate form-control">                          
                             </div>
                         </div>
                         
@@ -326,8 +288,8 @@
                     <input type="submit" class="btn-primary btn" v-if="!savebtn" value="Edit">
                     <input type="submit" class="btn-primary btn" v-if="savebtn" value="Save">
                     <!-- <label class="btn-primary btn" v-if="savebtn" v-on:click="saveForm()"><i class="fa fa-save"></i> Save</label> -->
-                    <!-- <label class="btn-primary btn" v-if="!savebtn" v-on:click="updatePat()">Edit</label> -->
-                    <label class="btn-primary btn" style="margin-top:8px;" v-on:click="cancelPat()">Cancel</label>
+                    <!-- <label class="btn-primary btn" v-if="!savebtn" v-on:click="updateVen()">Edit</label> -->
+                    <label class="btn-primary btn" style="margin-top:8px;" v-on:click="cancelVen()">Cancel</label>
                 </div>
                 </form>
             </div>
@@ -348,34 +310,27 @@ export default {
       pagenum: 1,
       showsetup: false,
       savebtn: true,
-      patId: null,
-      pat: {
+      venId: null,
+      ven: {
         vendor_name: "",
-        vendor_reference: "",
-        nrc: "",
-        age: "",
-        gender: 1,
+        vendor_type_id: 0,
+        contact_name: "",
+        phone: "",
+        address: "",
         dob: new Date(),
-        blood_type: "A",
-        marital_status: "Single",
+        state_id: 0,
         city: "",
         country: "",
-        nationality: "",
-        address: "",
-        religion: "",
-        state_id: 0,
-        father_name: "",
-        mother_name: "",
-        occupation: "",
-        phone: "",
-        fax: "",
-        email: "",
-        allergy: true,
+        website: "",
+        balance: "",
+        account_number: "",
+        purchase_account_number: "",
         remark: "",
-        vendorstatus: 1
+        email: ""
       },
       vendors: [],
-      states: []
+      states: [],
+      vendortypes: []
     };
   },
   mounted() {
@@ -387,6 +342,7 @@ export default {
         }
       })
       .then(response => {
+          console.log(response.data);
         app.vendors = response.data.vendors;
         app.states = response.data.states;
       })
@@ -432,32 +388,22 @@ export default {
         });
     },
 
-    newPat() {
-      //document.body.classList.toggle("sidebar-minimized");
-
-      // console.log(document.body.classList.length)
-      // console.log(document.body.classList.toggle('sidebar-minimized'))
-      // document.getElementsByTagName("body").classList.contains("sidebar-minimized");
+    newVen() {
       if (document.body.classList.length < 6) {
         //console.log("here");
         //document.getElementById("mytoggleclose").click();
         document.body.classList.toggle("sidebar-minimized");
       }
 
-      this.cancelPat();
+      this.cancelVen();
       this.showsetup = true;
-
-      //   document.getElementById("testingid").classList.toggle("close");
-      //   document.getElementsByTagName("body").addClass("sidebar-minimized");
-      //  var root = document.documentElement;
-      //  root.className += ' sidebar-minimized';
     },
 
     saveForm() {
       var app = this;
-      var newPat = app.pat;
+      var newVen = app.ven;
       axios
-        .post("/api/vendors", newPat, {
+        .post("/api/vendors", newVen, {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token")
           }
@@ -466,7 +412,7 @@ export default {
           alert("New vendor successfully saved.");
           app.vendors = response.data.vendors;
           app.states = response.data.states;
-          app.cancelPat();
+          app.cancelVen();
         })
         .catch(error => {
           if (error.response.data.message == "Unauthenticated.") {
@@ -478,13 +424,13 @@ export default {
         });
     },
 
-    editPat(id) {
+    editVen(id) {
       if (document.body.classList.length < 6) {
         document.body.classList.toggle("sidebar-minimized");
       }
       this.showsetup = true;
       var app = this;
-      app.patId = id;
+      app.venId = id;
       app.savebtn = false;
       axios
         .get("/api/vendors/" + id, {
@@ -494,7 +440,7 @@ export default {
         })
         .then(response => {
           //console.log(response.data);
-          app.pat = response.data.vendors;
+          app.ven = response.data.vendors;
           app.states = response.data.states;
         })
         .catch(error => {
@@ -507,20 +453,20 @@ export default {
         });
     },
 
-    updatePat() {
+    updateVen() {
       var app = this;
-      var edpat = app.pat;
-      // console.log("edpat" + edpat);
-      // console.log("patid" + app.patId);
+      var edven = app.ven;
+      // console.log("edven" + edven);
+      // console.log("venid" + app.venId);
       axios
-        .post("/api/vendors/" + app.patId, edpat, {
+        .post("/api/vendors/" + app.venId, edven, {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token")
           }
         })
         .then(function(response) {
           alert("vendor successfully Edited.");
-          app.cancelPat();
+          app.cancelVen();
           app.vendors = response.data.vendors;
           app.states = response.data.states;
         })
@@ -534,7 +480,7 @@ export default {
         });
     },
 
-    deletePat(id, index) {
+    deleteVen(id, index) {
       if (confirm("Do you really want to delete it?")) {
         var app = this;
         axios
@@ -558,7 +504,7 @@ export default {
       }
     },
 
-    cancelPat() {
+    cancelVen() {
       var app = this;
       app.savebtn = true;
       app.showsetup = false;
@@ -579,7 +525,7 @@ export default {
       app.ven.father_name = "";
       app.ven.state_id = 0;
       app.ven.mother_name = "";
-      app.ven.occupation = "";
+      app.ven.occuvenion = "";
       app.ven.phone = "";
       app.ven.fax = "";
       app.ven.email = "";

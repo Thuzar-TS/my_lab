@@ -28,6 +28,12 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('/users/{id}', 'Api\V1\UserController@delete'); 
     Route::post('/users/{id}', 'Api\V1\UserController@update');
 
+    Route::get('vendors', 'Api\V1\VendorController@index');
+    Route::get('vendors/{id}', 'Api\V1\VendorController@edit');
+    Route::post('vendors', 'Api\V1\VendorController@store');
+    Route::delete('/vendors/{id}', 'Api\V1\VendorController@delete'); 
+    Route::post('/vendors/{id}', 'Api\V1\VendorController@update');
+
     Route::get('brands', 'Api\V1\BrandController@index');
     Route::post('brands', 'Api\V1\BrandController@store');
     Route::delete('/brands/{id}', 'Api\V1\BrandController@delete'); 

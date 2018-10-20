@@ -7,6 +7,7 @@ use App\Vendor;
 use App\State;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class VendorController extends Controller
 {
@@ -17,9 +18,14 @@ class VendorController extends Controller
 
     public function index()
     {
-        $vendor = Vendor::paginate(2);
+        $vendor = Vendor::select('vendors.*','vendor_types.description as vtypename','states.state_name')
+        ->join('vendor_types','vendor_types.id','=','vendors.vendor_type_id')
+        ->join('states','states.id','=','vendors.state_id')
+        ->paginate(2);
+
         $state = State::all();
-        return response()->json(['vendors' => $vendor, 'states' => $state]);
+        $type = DB::select('SELECT * FROM vendor_types');
+        return response()->json(['vendors' => $vendor, 'states' => $state, 'types'=>$type]);
     }
 
     public function store(Request $request){
@@ -27,30 +33,19 @@ class VendorController extends Controller
          
             $vendor = new Vendor;
             $vendor->vendor_name = $request->input('vendor_name');
-            $vendor->vendor_reference = $request->input('vendor_reference');
-            $vendor->nrc = $request->input('nrc');
-            $vendor->age = $request->input('age');
-            $vendor->gender = $request->input('gender');
-            $bd = $request->input('dob');
-            $bdd = explode("T",$bd);
-            $vendor->dob = $bdd[0];
+            $vendor->vendor_type_id = $request->input('vendor_type_id');
+            $vendor->contact_name = $request->input('contact_name');
             $vendor->phone = $request->input('phone');
             $vendor->address = $request->input('address');
-            $vendor->blood_type = $request->input('blood_type');
-            $vendor->marital_status = $request->input('marital_status');
+            $vendor->state_id = $request->input('state_id');
             $vendor->city = $request->input('city');
             $vendor->country = $request->input('country');
-            $vendor->nationality = $request->input('nationality');
-            $vendor->religion = $request->input('religion');
-            $vendor->state_id = $request->input('state_id');
-            $vendor->father_name = $request->input('father_name');
-            $vendor->mother_name = $request->input('mother_name');
-            $vendor->occupation = $request->input('occupation');
-            $vendor->fax = $request->input('fax');
             $vendor->email = $request->input('email');
-            $vendor->allergy = $request->input('allergy');
+            $vendor->website = $request->input('website');
+            $vendor->balance = $request->input('balance');
+            $vendor->account_number = $request->input('account_number');
+            $vendor->purchase_account_number = $request->input('purchase_account_number');
             $vendor->remark = $request->input('remark');
-            $vendor->vendorstatus = $request->input('vendorstatus');            
             $vendor->user_id = Auth::user()->id;
             $vendor->save();
         }
@@ -69,30 +64,19 @@ class VendorController extends Controller
         if ($request->input('vendor_name')) {
             $vendor = Vendor::find($id);
             $vendor->vendor_name = $request->input('vendor_name');
-            $vendor->vendor_reference = $request->input('vendor_reference');
-            $vendor->nrc = $request->input('nrc');
-            $vendor->age = $request->input('age');
-            $vendor->gender = $request->input('gender');
-            $bd = $request->input('dob');
-            $bdd = explode("T",$bd);
-            $vendor->dob = $bdd[0];
+            $vendor->vendor_type_id = $request->input('vendor_type_id');
+            $vendor->contact_name = $request->input('contact_name');
             $vendor->phone = $request->input('phone');
             $vendor->address = $request->input('address');
-            $vendor->blood_type = $request->input('blood_type');
-            $vendor->marital_status = $request->input('marital_status');
+            $vendor->state_id = $request->input('state_id');
             $vendor->city = $request->input('city');
             $vendor->country = $request->input('country');
-            $vendor->nationality = $request->input('nationality');
-            $vendor->religion = $request->input('religion');
-            $vendor->state_id = $request->input('state_id');
-            $vendor->father_name = $request->input('father_name');
-            $vendor->mother_name = $request->input('mother_name');
-            $vendor->occupation = $request->input('occupation');
-            $vendor->fax = $request->input('fax');
             $vendor->email = $request->input('email');
-            $vendor->allergy = $request->input('allergy');
+            $vendor->website = $request->input('website');
+            $vendor->balance = $request->input('balance');
+            $vendor->account_number = $request->input('account_number');
+            $vendor->purchase_account_number = $request->input('purchase_account_number');
             $vendor->remark = $request->input('remark');
-            $vendor->vendorstatus = $request->input('vendorstatus');            
             $vendor->user_id = Auth::user()->id;
             $vendor->save();
         }

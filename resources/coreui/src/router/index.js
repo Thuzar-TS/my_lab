@@ -22,6 +22,7 @@ import States from '../views/setups/States'
 import Brands from '../views/setups/Brands'
 import DischargeTypes from '../views/setups/DischargeTypes'
 import Items from '../views/setups/Items'
+import Vendors from '../views/setups/Vendors'
 import Categories from '../views/setups/Categories'
 
 Vue.use(Router)
@@ -163,6 +164,12 @@ const routes = [
                         path: 'items',
                         name: 'Items',
                         component: Items,
+                        meta: { requiresAuth: true }
+                    },
+                    {
+                        path: 'vendors',
+                        name: 'Vendors',
+                        component: Vendors,
                         meta: { requiresAuth: true }
                     }
                 ]
