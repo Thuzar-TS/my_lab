@@ -18170,3 +18170,37 @@ td label {
   margin-bottom: 0px;
 }
 
+.hieitems {
+  border: 2px solid #ccc;
+  padding: 15px;
+  height: 400px;
+  overflow-y: auto;
+}
+
+.hieitems tr td {
+  border: 1px solid #ccc;
+  margin-top: 3px;
+}
+
+.hieitems tr td .nextbox {
+  width: 100%;
+  background: #074835;
+  color: #fff;
+  border-radius: 5px;
+  padding: 1px 5px 1px 10px;
+  text-align: center;
+  font-size: 1.2em;
+  border: 1px solid #aaa;
+  cursor: pointer;
+}
+
+.hieitems tr td .nextbox:hover {
+  background: #fff;
+  color: #074835;
+}
+
+.hietree {
+  border: 2px solid #ccc;
+  padding: 15px;
+}
+

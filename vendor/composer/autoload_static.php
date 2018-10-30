@@ -335,9 +335,13 @@ class ComposerStaticInit4a07f70d2b0fde7397a295a047385e71
     );
 
     public static $classMap = array (
+        'App\\Brand' => __DIR__ . '/../..' . '/app/Brand.php',
+        'App\\Category' => __DIR__ . '/../..' . '/app/Category.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Doctor' => __DIR__ . '/../..' . '/app/Doctor.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Http\\Controllers\\Api\\V1\\BrandController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/V1/BrandController.php',
+        'App\\Http\\Controllers\\Api\\V1\\CategoryController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/V1/CategoryController.php',
         'App\\Http\\Controllers\\Api\\V1\\DoctorController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/V1/DoctorController.php',
         'App\\Http\\Controllers\\Api\\V1\\LabGroupController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/V1/LabGroupController.php',
         'App\\Http\\Controllers\\Api\\V1\\LocationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/V1/LocationController.php',

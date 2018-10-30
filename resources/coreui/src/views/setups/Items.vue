@@ -78,7 +78,7 @@
                 </div>
                
                 <div class="card-block">
-                    <div class="row">
+                    <div class="row" v-if="ite.ismultilevel==1">
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label for="item">Item Name</label>
@@ -106,8 +106,7 @@
 
                         </div>
 
-                        <div class="col-sm-3">
-                            
+                        <div class="col-sm-3">                          
 
                             <div class="form-group">
                                 <b-form-fieldset label="Group">
@@ -146,8 +145,7 @@
                             </div>                            
                         </div>
 
-                        <div class="col-sm-3">  
-                                                    
+                        <div class="col-sm-3">                                                      
 
                             <div class="form-group" id="date">
                                 <label for="dob">Expired Date</label>
@@ -186,8 +184,10 @@
                                 <label for="occuiteion">Purchase Return Account</label>
                                 <input v-model="ite.purchasereturn_account_number" placeholder="Account Number" type="text" class="validate form-control">                          
                             </div>
-                        </div>
-                        
+                        </div>                        
+                    </div>
+                    <div class="row" v-if="ite.ismultilevel==false">
+                        Hello
                     </div>
                     <div class="row bottom-clear">
                         <div class="col-sm-3">
@@ -200,7 +200,7 @@
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <b-form-fieldset>
-                                    <b-form-checkbox value="1" v-model="ite.ismultilevel" style="cursor:pointer;">Multi Level</b-form-checkbox>
+                                    <b-form-checkbox value="1"  v-model="ite.ismultilevel" style="cursor:pointer;">Multi Level</b-form-checkbox>
                                 </b-form-fieldset>                               
                             </div>
                         </div>
@@ -303,6 +303,9 @@ export default {
       });
   },
   methods: {
+    somefun(a){
+        alert(a);
+    },
     customFormatter(date) {
       //return moment(date).format("DD/MM/YYYY");
       return moment(String(date)).format("MM-DD-YYYY");

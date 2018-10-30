@@ -6,9 +6,13 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Brand' => $baseDir . '/app/Brand.php',
+    'App\\Category' => $baseDir . '/app/Category.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Doctor' => $baseDir . '/app/Doctor.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
+    'App\\Http\\Controllers\\Api\\V1\\BrandController' => $baseDir . '/app/Http/Controllers/Api/V1/BrandController.php',
+    'App\\Http\\Controllers\\Api\\V1\\CategoryController' => $baseDir . '/app/Http/Controllers/Api/V1/CategoryController.php',
     'App\\Http\\Controllers\\Api\\V1\\DoctorController' => $baseDir . '/app/Http/Controllers/Api/V1/DoctorController.php',
     'App\\Http\\Controllers\\Api\\V1\\LabGroupController' => $baseDir . '/app/Http/Controllers/Api/V1/LabGroupController.php',
     'App\\Http\\Controllers\\Api\\V1\\LocationController' => $baseDir . '/app/Http/Controllers/Api/V1/LocationController.php',

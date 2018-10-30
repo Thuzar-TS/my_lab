@@ -15,17 +15,22 @@ class UnitController extends Controller
 
     public function index()
     {
-        return Unit::paginate(5);
+        $units = Unit::paginate(5);
+        //$punits = Unit::all();
+        return response()->json(['units' => $units]);
     }
 
     public function store(Request $request){
         if ($request->unit_name) {
             $uni = new Unit;
             $uni->unit_name = $request->unit_name;
+           // $uni->parent_id = $request->parent_id;
             $uni->user_id = Auth::user()->id;
             $uni->save();
         }
-        return Unit::paginate(5);
+        $units = Unit::paginate(5);
+        //$punits = Unit::all();
+        return response()->json(['units' => $units]);
     }
 
     // public function edit($id){
@@ -41,7 +46,9 @@ class UnitController extends Controller
             $uni->user_id = Auth::user()->id;
             $uni->save();
         }
-        return Unit::paginate(5);
+        $units = Unit::paginate(5);
+        //$punits = Unit::all();
+        return response()->json(['units' => $units]);
     }
 
     public function delete($id){

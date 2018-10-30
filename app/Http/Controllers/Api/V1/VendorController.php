@@ -49,15 +49,22 @@ class VendorController extends Controller
             $vendor->user_id = Auth::user()->id;
             $vendor->save();
         }
-        $vendor = Vendor::paginate(2);
+        $vendor = Vendor::select('vendors.*','vendor_types.description as vtypename','states.state_name')
+        ->join('vendor_types','vendor_types.id','=','vendors.vendor_type_id')
+        ->join('states','states.id','=','vendors.state_id')
+        ->paginate(2);
+
         $state = State::all();
-        return response()->json(['vendors' => $vendor, 'states' => $state]);
+        $type = DB::select('SELECT * FROM vendor_types');
+        return response()->json(['vendors' => $vendor, 'states' => $state, 'types'=>$type]);
     }
 
     public function edit($id){
         $vendor = Vendor::find($id);
+       
         $state = State::all();
-        return response()->json(['vendors' => $vendor, 'states' => $state]);
+        $type = DB::select('SELECT * FROM vendor_types');
+        return response()->json(['vendors' => $vendor, 'states' => $state, 'types'=>$type]);
     }
 
     public function update(Request $request,$id){
@@ -80,9 +87,14 @@ class VendorController extends Controller
             $vendor->user_id = Auth::user()->id;
             $vendor->save();
         }
-        $vendor = Vendor::paginate(2);
+        $vendor = Vendor::select('vendors.*','vendor_types.description as vtypename','states.state_name')
+        ->join('vendor_types','vendor_types.id','=','vendors.vendor_type_id')
+        ->join('states','states.id','=','vendors.state_id')
+        ->paginate(2);
+
         $state = State::all();
-        return response()->json(['vendors' => $vendor, 'states' => $state]);
+        $type = DB::select('SELECT * FROM vendor_types');
+        return response()->json(['vendors' => $vendor, 'states' => $state, 'types'=>$type]);
     }
 
     public function delete($id){

@@ -94,6 +94,23 @@ export default {
       ]
     },
     {
+      name: 'Hierarchy',
+      url: '/components',
+      icon: 'icon-puzzle',
+      children: [
+        {
+          name: 'Groups',
+          url: '/hierarchies/groups',
+          icon: 'fa fa-user'
+        },
+        {
+          name: 'Units',
+          url: '/hierarchies/units',
+          icon: 'icon-puzzle'
+        }
+      ]
+    },
+    {
       name: 'Logout',
       url: '/logout',
       icon: 'icon-speedometer',      

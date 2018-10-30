@@ -76,6 +76,14 @@
                             <input type="text" class="validate form-control" v-model="uni.unit_name">
                         </div>
                     </div>
+                    <!-- <div class="form-group">
+                        <b-form-fieldset label="Parent Unit">
+                            <b-form-select v-model="uni.parent_id">
+                                <option value="0">-- Choose --</option>
+                                <option v-for="item in punits" :value="item.id" :key="item.id">{{item.unit_name}}</option>
+                            </b-form-select>
+                        </b-form-fieldset>                              
+                    </div> -->
                     <input type="hidden" name="_token" value="<?= csrf_token() ?>">
                     <div class="form-group">
                         <label class="btn-primary btn" v-if="savebtn" v-on:click="saveForm()">Save</label>
@@ -100,8 +108,10 @@ export default {
       uniId: null,
       uni: {
         unit_name: ""
+       // parent_id: 0
       },
       units: []
+     // punits: []
     };
   },
   mounted() {
@@ -114,7 +124,8 @@ export default {
       })
       .then(response => {
         console.log(response.data);
-        app.units = response.data;
+        app.units = response.data.units;
+        //app.punits = response.data.punits;
       })
       .catch(error => {
         if (error.response.data.message == "Unauthenticated.") {
@@ -141,7 +152,8 @@ export default {
         })
         .then(response => {
           app.pagenum = page;
-          app.units = response.data;
+          app.units = response.data.units;
+         // app.punits = response.data.punits;
         })
         .catch(error => {
           if (error.response.data.message == "Unauthenticated.") {
@@ -165,7 +177,8 @@ export default {
           })
           .then(function(response) {
             alert("New Unit successfully saved.");
-            app.units = response.data;
+            app.units = response.data.units;
+           // app.punits = response.data.punits;
             app.cancelUni();
           })
           .catch(error => {
@@ -202,7 +215,8 @@ export default {
           .then(function(response) {
             alert("Unit successfully edited.");
             app.cancelUni();
-            app.units = response.data;
+            app.units = response.data.units;
+            // app.punits = response.data.punits;
           })
           .catch(error => {
             if (error.response.data.message == "Unauthenticated.") {

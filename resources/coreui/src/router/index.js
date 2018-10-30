@@ -25,6 +25,9 @@ import Items from '../views/setups/Items'
 import Vendors from '../views/setups/Vendors'
 import Categories from '../views/setups/Categories'
 
+import Hunits from '../views/hierarchies/Units'
+import Hgroups from '../views/hierarchies/Groups'
+
 Vue.use(Router)
 
 // export default new Router({
@@ -173,9 +176,31 @@ const routes = [
                         meta: { requiresAuth: true }
                     }
                 ]
+            },
+            {
+                path: '/hierarchies',
+                name: 'Hierarchy',
+                component: {
+                    render(c) { return c('router-view') }
+                },
+                children: [
+                   
+                    {
+                        path: 'units',
+                        name: 'Units',
+                        component: Hunits,
+                        meta: { requiresAuth: true }
+                    },
+                    {
+                        path: 'groups',
+                        name: 'Groups',
+                        component: Hgroups,
+                        meta: { requiresAuth: true }
+                    }
+                ]
             }
         ]
-    },
+    },    
     {
         path: '/login',
         name: 'login',
